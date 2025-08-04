@@ -1,16 +1,51 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Todomemo45757</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Organizer - UI Prototype</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+      <!-- Tailwind CSS CDNを読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Google Fonts - Interを読み込み */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* 薄いグレーの背景 */
+        }
+    </style>
+</head>
 
-  <body>
+
+<body class="min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+    <!-- ヘッダー -->
+    <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-8 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">Task Organizer</h1>
+      <div class="btns">
+        <%= link_to "投稿ページへ", root_path, class: "btn" %>
+        <%= link_to "一覧ページへ", "#", class: "btn" %>
+      </div>
+        <!-- ログイン/ログアウト機能は今回はダミー -->
+        <div class="flex items-center space-x-4">
+            <!-- 実際のRailsアプリでは、user_signed_in? などでログイン状態を判定します -->
+            <%# if user_signed_in? %>
+                <%#= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: '...' %>
+            <%# else %>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                    ログイン
+                </button>
+            <%# end %>
+        </div>
+
+    </header>
     <%= yield %>
+    <footer class="w-full max-w-4xl text-center text-gray-500 text-sm mt-8">
+        &copy; 2024 Task Organizer. All rights reserved.
+    </footer>
   </body>
 </html>
