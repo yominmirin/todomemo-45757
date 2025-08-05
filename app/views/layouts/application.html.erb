@@ -33,13 +33,12 @@
         <!-- ログイン/ログアウト機能は今回はダミー -->
         <div class="flex items-center space-x-4">
             <!-- 実際のRailsアプリでは、user_signed_in? などでログイン状態を判定します -->
-            <%# if user_signed_in? %>
-                <%#= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: '...' %>
-            <%# else %>
-                <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
-                    ログイン
-                </button>
-            <%# end %>
+            <% if user_signed_in? %>
+                <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+            <% else %>
+                <%= link_to 'ログイン', new_user_session_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+
+            <% end %>
         </div>
 
     </header>
@@ -47,5 +46,84 @@
     <footer class="w-full max-w-4xl text-center text-gray-500 text-sm mt-8">
         &copy; 2024 Task Organizer. All rights reserved.
     </footer>
+
+
+    <%# <script>
+        // JavaScriptは最小限に留め、ボタンクリック時の動作をシミュレートします。
+        // 実際のアプリでは、ここでフォームデータの送信やページ遷移のロジックを記述します。
+        
+        // 注意: Railsでは、JavaScriptは通常別のファイルに分離されます。
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskNameInput = document.getElementById('taskName');
+            const writeLaterBtn = document.getElementById('writeLaterBtn');
+            const postTaskBtn = document.getElementById('postTaskBtn');
+            const viewTasksBtn = document.getElementById('viewTasksBtn');
+            const postedTaskCountSpan = document.getElementById('postedTaskCount'); // カウンター表示要素
+
+            // ERBで生成されたタスク数があれば、それを初期値として設定
+            let newTasksCount = parseInt(postedTaskCountSpan.textContent) || 0;
+
+            // カウンターを更新する関数
+            function updateCounter() {
+                postedTaskCountSpan.textContent = newTasksCount;
+            }
+
+            // 「あとで書く」ボタンのクリックイベント
+            writeLaterBtn.addEventListener('click', () => {
+                const taskName = taskNameInput.value.trim();
+                if (taskName === "") {
+                    console.log("タスク名が未記入ですが、「あとで書く」として保存します。");
+                    alert("タスク名が未記入ですが、「あとで書く」として保存しました！（実際には保存処理が行われます）");
+                } else {
+                    console.log(`「${taskName}」を「あとで書く」として保存します。`);
+                    alert(`「${taskName}」を「あとで書く」として保存しました！（実際には保存処理が行われます）`);
+                }
+                // 「あとで書く」の場合も投稿数に含める
+                newTasksCount++;
+                updateCounter();
+
+                // フォームをリセットするなどの処理
+                // taskNameInput.value = '';
+                // document.getElementById('taskCategory').value = '';
+                // document.getElementById('taskDeadline').value = '';
+                // document.getElementById('taskImportance').value = 'medium';
+                // document.getElementById('memo').value = '';
+            });
+
+            // 「タスクを投稿」ボタンのクリックイベント
+            postTaskBtn.addEventListener('click', () => {
+                const taskName = taskNameInput.value.trim();
+                if (taskName === "") {
+                    alert("タスク名を入力してください。");
+                    taskNameInput.focus();
+                    return;
+                }
+                console.log(`タスク「${taskName}」を投稿します。`);
+                alert(`タスク「${taskName}」を投稿しました！（実際にはデータベースに保存されます）`);
+
+                newTasksCount++; // 投稿成功時にカウントを増やす
+                updateCounter(); // カウンターを更新
+
+                // フォームをリセットするなどの処理
+                // taskNameInput.value = '';
+                // document.getElementById('taskCategory').value = '';
+                // document.getElementById('taskDeadline').value = '';
+                // document.getElementById('taskImportance').value = 'medium';
+                // document.getElementById('memo').value = '';
+            });
+
+            // 「タスク一覧を表示」ボタンのクリックイベント
+            viewTasksBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // リンクのデフォルト動作をキャンセル
+                console.log("タスク一覧ページへ遷移します。");
+                alert("タスク一覧ページへ遷移します！（実際にはタスク一覧ページへ移動します）");
+                // 実際のアプリでは、window.location.href = 'task_list.html'; などでページ遷移
+            });
+
+            // 初期表示時にカウンターを更新
+            updateCounter();
+        });
+    </script> %>
   </body>
 </html>

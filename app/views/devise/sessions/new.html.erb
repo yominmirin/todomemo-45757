@@ -1,0 +1,39 @@
+<div class="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-8">
+    <div>
+        <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
+        アカウントにログイン
+        </h2>
+    </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-8 space-y-6" }) do |f| %>
+        <div class="rounded-md shadow-sm -space-y-px">
+            <div>
+                <label for="email-address" class="sr-only">メールアドレス</label>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true,
+                    class: "appearance-none rounded-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-lg",
+                    placeholder: "メールアドレス" %>
+            </div>
+            <div>
+                <label for="password" class="sr-only">パスワード</label>
+                <%= f.password_field :password, autocomplete: "current-password", required: true,
+                    class: "appearance-none rounded-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-lg",
+                    placeholder: "パスワード" %>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="flex items-center">
+                    <%= f.check_box :remember_me, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+                    <%= f.label :remember_me, "ログイン状態を維持する", class: "ml-2 block text-sm text-gray-900" %>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <%= f.submit "ログイン", class: "group relative w-full flex justify-center py-3 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out" %>
+        </div>
+    <% end %>
+    <div class="text-sm text-center">
+        <%= link_to 'アカウントをお持ちでないですか？新規登録はこちら', new_user_registration_path, class: "font-medium text-blue-600 hover:text-blue-500" %>
+    </div>
+</div>
