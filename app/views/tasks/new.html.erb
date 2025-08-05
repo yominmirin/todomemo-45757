@@ -1,89 +1,62 @@
 <%= render "shared/header" %>
-    <!-- メインコンテンツエリア - 新規タスク投稿 -->
-    <main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-2 border-b-2 border-blue-400 pb-2">新規タスク投稿</h2>
-        <!-- 投稿カウンター。実際のRailsアプリではコントローラーから渡されたタスク数を表示します -->
-        <div id="newPostCounter" class="text-right text-gray-600 text-sm mb-6">
-            本日投稿されたタスク数: <span id="postedTaskCount"><%# new_tasks_count %></span> 件
-        </div>
+<main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-2 border-b-2 border-blue-400 pb-2">新規タスク投稿</h2>
 
-        <div class="space-y-6">
-            <!-- 実際のRailsアプリでは form_with や form_tag を使ってフォームを生成します -->
-            <%#= form_with(model: @task, local: true) do |form| %>
-            <!-- アクションボタン群 (上部に移動) -->
-            <div class="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 pb-4">
-                <!-- 「あとで書く」ボタンは、JavaScriptで処理するか、別途アクションを定義します -->
-                <button id="writeLaterBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg">
-                    あとで書く
-                </button>
-                <!-- 投稿ボタンは、form_withのsubmitボタンとして機能します -->
-                <button id="postTaskBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg">
-                    タスクを投稿
-                </button>
-            </div>
+  <!-- 投稿カウンター -->
+  <div id="newPostCounter" class="text-right text-gray-600 text-sm mb-6">
+    本日投稿されたタスク数: <span id="postedTaskCount"><%#= new_tasks_count %></span> 件
+  </div>
 
-            <!-- タスク名入力欄 -->
-            <div>
-                <label for="taskName" class="block text-lg font-medium text-gray-700 mb-2">タスク名 <span class="text-red-500">*</span></label>
-                <!-- 実際のRailsアプリでは form.text_field を使用します -->
-                <input type="text" id="taskName" name="task[name]" placeholder="例: 〇〇プロジェクトの資料作成"
-                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg">
-            </div>
+  <div class="space-y-6">
+    <%= form_with(model: @task, local: true) do |f| %>
+      <!-- アクションボタン -->
+      <div class="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 pb-4">
+        <button id="writeLaterBtn" type="button" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg">
+          あとで書く
+        </button>
+        <%= f.submit "タスクを投稿", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg" %>
+      </div>
 
-            <!-- カテゴリ選択 -->
-            <div>
-                <label for="taskCategory" class="block text-lg font-medium text-gray-700 mb-2">カテゴリ</label>
-                <!-- 実際のRailsアプリでは form.select を使用します -->
-                <select id="taskCategory" name="task[category]"
-                        class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg">
-                    <option value="">選択してください</option>
-                    <option value="work">仕事</option>
-                    <option value="private">プライベート</option>
-                    <option value="study">学習</option>
-                    <option value="other">その他</option>
-                </select>
-            </div>
+      <!-- タスク名 -->
+      <div>
+        <%= f.label :name, "タスク名", class: "block text-lg font-medium text-gray-700 mb-2" %><span class="text-red-500">*</span>
+        <%= f.text_field :name, placeholder: "例: 〇〇プロジェクトの資料作成", class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
+      </div>
 
-            <!-- 締切日入力 -->
-            <div>
-                <label for="taskDeadline" class="block text-lg font-medium text-gray-700 mb-2">締切日</label>
-                <!-- 実際のRailsアプリでは form.date_field を使用します -->
-                <input type="date" id="taskDeadline" name="task[deadline]"
-                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg">
-            </div>
+      <!-- カテゴリ -->
+      <div>
+        <%= f.label :category, "カテゴリ", class: "block text-lg font-medium text-gray-700 mb-2" %>
+        <%= f.select :category, [["選択してください", ""], ["仕事", "work"], ["プライベート", "private"], ["学習", "study"], ["その他", "other"]],
+          {}, class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
+      </div>
 
-            <!-- 重要度選択 -->
-            <div>
-                <label for="taskImportance" class="block text-lg font-medium text-gray-700 mb-2">重要度</label>
-                <!-- 実際のRailsアプリでは form.select を使用します -->
-                <select id="taskImportance" name="task[importance]"
-                        class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg">
-                    <option value="low">低</option>
-                    <option value="medium" selected>中</option>
-                    <option value="high">高</option>
-                </select>
-            </div>
+      <!-- 締切日 -->
+      <div>
+        <%= f.label :deadline, "締切日", class: "block text-lg font-medium text-gray-700 mb-2" %>
+        <%= f.date_field :deadline, class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
+      </div>
 
-            <!-- タスクの詳細を書く欄 -->
-            <div>
-                <label for="memo" class="block text-lg font-medium text-gray-700 mb-2">タスクの詳細</label>
-                <!-- 実際のRailsアプリでは form.text_area を使用します -->
-                <textarea id="memo" name="task[memo]" rows="4" placeholder="タスクの詳細や補足事項を記入してください。"
-                          class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg"></textarea>
-            </div>
-            <%# end %>
+      <!-- 重要度 -->
+      <div>
+        <%= f.label :importance, "重要度", class: "block text-lg font-medium text-gray-700 mb-2" %>
+        <%= f.select :importance, [["低", "low"], ["中", "medium"], ["高", "high"]],
+          {}, class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
+      </div>
 
-        </div>
-    </main>
+      <!-- 詳細メモ -->
+      <div>
+        <%= f.label :memo, "タスクの詳細", class: "block text-lg font-medium text-gray-700 mb-2" %>
+        <%= f.text_area :memo, rows: 4, placeholder: "タスクの詳細や補足事項を記入してください。", class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
+      </div>
+    <% end %>
+  </div>
+</main>
 
-    <!-- タスク一覧への導線 -->
-    <section class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 text-center">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-400 pb-2">タスクの確認</h2>
-        <p class="text-gray-700 text-lg mb-6">現在のタスク一覧を確認したり、編集・削除したい場合はこちらから。</p>
-        <!-- 実際のRailsアプリでは link_to を使用します -->
-        <%#= link_to 'タスク一覧を表示', tasks_path, class: '...' %>
-        <a href=new_user_registration_path id="viewTasksBtn" class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out text-xl">
-            タスク一覧を表示
-        </a>
-    </section>
+<!-- タスク一覧への導線 -->
+<section class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 text-center">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-400 pb-2">タスクの確認</h2>
+  <p class="text-gray-700 text-lg mb-6">現在のタスク一覧を確認したり、編集・削除したい場合はこちらから。</p>
+
+  <%#= link_to 'タスク一覧を表示', tasks_path, class: "inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out text-xl" %>
+</section>
 
