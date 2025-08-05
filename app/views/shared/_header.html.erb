@@ -1,0 +1,14 @@
+<header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-gray-800">Task Organizer</h1>
+  <div class="btns">
+    <%= link_to "投稿ページへ", root_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+    <%= link_to "一覧ページへ", "#", class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+  </div>
+    <div class="flex items-center space-x-4">
+        <% if user_signed_in? %>
+            <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+        <% else %>
+            <%= link_to 'ログイン', new_user_session_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+        <% end %>
+    </div>
+</header>
