@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_082204) do
     t.string "title"
     t.text "details"
     t.date "deadline"
-    t.integer "status_id"
+    t.integer "status_id", default: 1
     t.integer "category_id"
     t.integer "priority_id"
     t.boolean "needs_editing", default: false
