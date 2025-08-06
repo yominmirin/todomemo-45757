@@ -8,13 +8,14 @@
   </div>
 
   <div class="space-y-6">
-    <%= form_with(model: @task, local: true) do |f| %>
+    <%= form_with(model: @task, local: true, id: "task-form") do |f| %>
     <!-- アクションボタン -->
     <div class="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 pb-4">
-        <button id="writeLaterBtn" type="button" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg">
+        <%= button_tag "あとで書く", type: "submit", data: { editing: "true" }, class: "bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg" %>
+        <%# <button id="writeLaterBtn" type="button" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg">
         あとで書く
-        </button>
-        <%= f.submit "タスクを投稿", class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg" %>
+        </button> %>
+        <%= f.submit "タスクを投稿", data: { editing: "false" }, class: "bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out text-lg" %>
     </div>
 
     <!-- タスク名 -->
@@ -50,6 +51,9 @@
         <%= f.label :details, "タスクの詳細", class: "block text-lg font-medium text-gray-700 mb-2" %>
         <%= f.text_area :details, rows: 4, placeholder: "タスクの詳細や補足事項を記入してください。", class: "mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg" %>
     </div>
+
+    <!-- 編集が必要か -->
+    <%= f.hidden_field :needs_editing, id: "needs_editing" %>
     <% end %>
   </div>
 </main>
