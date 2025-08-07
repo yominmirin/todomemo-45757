@@ -1,0 +1,41 @@
+<%= render "shared/header" %>
+<main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+    <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
+        <h2 class="text-2xl font-semibold text-gray-800">タスク一覧</h2>
+    </div>
+    <div id="taskList" class="space-y-4">
+    <% @tasks.each do |task| %>
+        <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+            <div class="w-full mb-4">
+            
+                <div class="flex justify-between items-start mb-1">
+                <div class="text-xl font-bold text-gray-800"><%= task.title.present? ? task.title : "無題" %></div>
+                <% if task.needs_editing %>
+                    <div class="bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded">
+                    要編集
+                    </div>
+                <% end %>
+                </div>
+                <div class="flex justify-left items-center">
+                    <p class="text-gray-600 text-sm mr-4">重要度: <span class="font-semibold text-orange-500"><%= task.priority&.name.present? ? task.priority.name : "未選択" %></span></p>
+                    <p class="text-gray-600 text-sm mr-4">締切: <span class="font-semibold"><%= task.deadline %></span></p>
+                    <p class="text-gray-600 text-sm">進捗状況: <span class="font-semibold"><%= task.status.name %></span></p>
+                </div>
+                <p class="text-gray-700 mt-2 mb-4"><%= task.details.present? ? task.details : "詳細はありません" %></p>
+                <p class="text-gray-600 text-sm">作成日時: <span class="font-semibold"><%= task.created_at.in_time_zone('Tokyo').strftime('%Y-%m-%d %H:%M:%S') %></span></p>
+                <p class="text-gray-600 text-sm">カテゴリ: <span class="font-semibold"><%= task.category&.name.present? ? task.category.name : "未選択" %></span></p>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <!-- 詳細ボタン -->
+                <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                    編集
+                </a>
+                <!-- 削除ボタン -->
+                <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                    削除
+                </button>
+            </div>
+        </div>
+    <% end %>
+    </div>
+</main>
