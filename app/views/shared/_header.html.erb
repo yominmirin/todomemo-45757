@@ -2,7 +2,7 @@
     <h1 class="text-3xl font-bold text-gray-800">Task Organizer</h1>
   <div class="btns">
     <%= link_to "投稿ページへ", root_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
-    <%= link_to "一覧ページへ", "#", class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
+    <%= link_to "一覧ページへ", tasks_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out" %>
   </div>
     <div class="flex items-center space-x-4">
         <% if user_signed_in? %>
