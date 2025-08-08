@@ -10,7 +10,7 @@
             </a>
             <!-- 削除ボタン -->
             <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                削除
+                <%= link_to "削除", task_path(@task), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
             </button>
         </div>
     </div>
