@@ -27,9 +27,7 @@
             </div>
             <div class="flex justify-end space-x-2">
                 <!-- 詳細ボタン -->
-                <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                    編集
-                </a>
+                <%= link_to "詳細",task_path(task), class: "bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
                 <!-- 削除ボタン -->
                 <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
                     削除

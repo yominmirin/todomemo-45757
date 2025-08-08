@@ -16,6 +16,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @task = Task.find(params[:id])
+  end
+
   private
   def task_params
     params.require(:task).permit(:title, :category_id, :deadline, :priority_id, :details, :needs_editing).merge(user_id: current_user.id)
