@@ -1,0 +1,27 @@
+<turbo-frame id="task-show-frame">
+  <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
+    <h2 class="text-2xl font-semibold text-gray-800">タスク詳細</h2>
+    <div class="flex space-x-2">
+      <a href="/tasks/<%= task.id %>/edit"
+         class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+         data-turbo-frame="edit_task">
+        編集
+      </a>
+      <%= button_to "削除",
+              task_path(@task),
+              method: :delete,
+              data: { turbo: false, confirm: "本当に削除しますか？" },
+              class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
+    </div>
+  </div>
+
+  <div id="task-edit-wrapper" class="flex flex-col gap-6">
+    <turbo-frame id="task-detail">
+      <%= render 'task_detail', task: task %>
+    </turbo-frame>
+    <turbo-frame id="edit_task"
+                 class="hidden bg-white rounded-xl p-6 shadow-md border border-gray-300 transition-all duration-300 ease-in-out"
+                 style="min-height: 300px;">
+    </turbo-frame>
+  </div>
+</turbo-frame>

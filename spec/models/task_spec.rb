@@ -35,7 +35,7 @@ RSpec.describe Task, type: :model do
         @task.needs_editing = true
         expect(@task).to be_valid
       end
-        it 'needs_editingがfalseの場合投稿できる' do
+      it 'needs_editingがfalseの場合投稿できる' do
         @task.needs_editing = false
         expect(@task).to be_valid
       end
@@ -44,7 +44,7 @@ RSpec.describe Task, type: :model do
       it 'userがnullの場合投稿できない' do
         @task.user_id = nil
         @task.valid?
-        expect(@task.errors.full_messages).to include("User must exist")
+        expect(@task.errors.full_messages).to include('User must exist')
       end
     end
   end
