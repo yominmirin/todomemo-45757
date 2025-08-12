@@ -1,53 +1,26 @@
 <%= render "shared/header" %>
-<!-- メインコンテンツエリア - タスク詳細 -->
 <main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
-    <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
-        <h2 class="text-2xl font-semibold text-gray-800">タスク詳細</h2>
-        <div class="flex space-x-2">
-            <!-- 編集ボタン -->
-            <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                編集
-            </a>
-            <!-- 削除ボタン -->
-            <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                <%= link_to "削除", task_path(@task), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
-            </button>
-        </div>
-    </div>
-    
-    <!-- タスク詳細情報カード -->
-    <div class="bg-gray-50 rounded-xl p-6 shadow-md">
-        <h3 class="text-3xl font-bold text-gray-800 mb-2"><%= @task.title.present? ? @task.title : "無題" %></h3>
-        <div class="space-y-2 text-gray-700">
-            <div class="flex items-center">
-                <span class="font-semibold text-lg w-24">重要度:</span>
-                <span class="text-lg text-red-500 font-bold"><%= @task.priority&.name.present? ? @task.priority.name : "未選択" %></span>
-            </div>
-            <div class="flex items-center">
-                <span class="font-semibold text-lg w-24">締切:</span>
-                <span class="text-lg"><%= @task.deadline %></span>
-            </div>
-            <div class="flex items-center">
-                <span class="font-semibold text-lg w-24">カテゴリ:</span>
-                <span class="text-lg"><%= @task.category&.name.present? ? @task.category.name : "未選択" %></span>
-            </div>
-            <div class="flex items-center">
-                <span class="font-semibold text-lg w-24">進捗状況:</span>
-                <span class="text-lg"><%= @task.status.name %></span>
+    <turbo-frame id="task-show-frame">
+        <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
+            <h2 class="text-2xl font-semibold text-gray-800">タスク詳細</h2>
+            <div class="flex space-x-2">
+                <a href="/tasks/<%= @task.id %>/edit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" data-turbo-frame="edit_task">
+                    編集
+                </a>
+                <%= button_to "削除",
+              task_path(@task),
+              method: :delete,
+              data: { turbo: false, confirm: "本当に削除しますか？" },
+              class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
             </div>
         </div>
-        
-        <hr class="my-4 border-gray-300">
-        
-        <div class="mt-4">
-            <p class="font-semibold text-lg text-gray-800 mb-2">詳細</p>
-            <p class="text-gray-700 leading-relaxed">
-                <%= @task.details.present? ? @task.details : "詳細はありません" %>
-            </p>
-        </div>
-    </div>
 
-    <div class="text-right text-sm text-gray-500 mt-4">
-        作成日時: <span class="font-semibold"><%= @task.created_at.in_time_zone('Tokyo').strftime('%Y-%m-%d %H:%M:%S') %></span>
-    </div>
+        <div id="task-edit-wrapper" class="flex flex-col gap-6">
+            <turbo-frame id="task-detail">
+                <%= render 'task_detail', task: @task %>
+            </turbo-frame>
+            <turbo-frame id="edit_task" class="hidden bg-white rounded-xl p-6 shadow-md border border-gray-300 transition-all duration-300 ease-in-out" style="min-height: 300px;">
+            </turbo-frame>
+        </div>
+    </turbo-frame>
 </main>
