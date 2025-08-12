@@ -6,6 +6,10 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+
+    @today_tasks_count = Task.where(user_id: current_user.id)
+                           .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                           .count
   end
 
   def create
