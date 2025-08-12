@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   def new
