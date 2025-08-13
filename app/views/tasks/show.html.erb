@@ -14,7 +14,11 @@
               class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
             </div>
         </div>
-
+        <% if @task.needs_editing %>
+            <div class="w-16 bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded">
+              要編集
+            </div>
+        <% end %>
         <div id="task-edit-wrapper" class="flex flex-col gap-6">
             <turbo-frame id="task-detail">
                 <%= render 'task_detail', task: @task %>
