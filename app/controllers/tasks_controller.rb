@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks = Task.where(user_id: current_user.id).order(created_at: :desc)
+    @tasks = Task.where(user_id: current_user.id).order(created_at: :asc)
   end
 
   def new
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace('task-show-frame', partial: 'tasks/show_frame', locals: { task: @task }),
+              turbo_stream.replace('task-show-frame', partial: 'shared/show_frame', locals: { task: @task }),
               turbo_stream.append('body', '<script>updateLayout();</script>')
             ]
           end
@@ -53,7 +53,7 @@ class TasksController < ApplicationController
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.replace('task-show-frame', partial: 'tasks/show_frame', locals: { task: @task }),
+              turbo_stream.replace('task-show-frame', partial: 'shared/show_frame', locals: { task: @task }),
               turbo_stream.append('body', '<script>updateLayout();</script>')
             ]
           end
@@ -63,7 +63,7 @@ class TasksController < ApplicationController
     else
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('edit_task', partial: 'tasks/edit_form', locals: { task: @task }),
+          render turbo_stream: turbo_stream.replace('edit_task', partial: 'shared/edit_form', locals: { task: @task }),
                  status: :unprocessable_entity
         end
         format.html { render :edit, status: :unprocessable_entity }
