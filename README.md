@@ -28,7 +28,7 @@ https://todomemo-45757.onrender.com
 - タスク検索機能
 
 # データベース設計
-- 丸角はアクティブハッシュ
+- 角丸はアクティブハッシュ
 ![ER図](./images/todo.png)
 # 画面遷移図
 ![画面遷移図](./images/sennizu.png)
