@@ -1,5 +1,5 @@
 <%= render "shared/header" %>
-<main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+<main class="w-full max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-4 sm:p-8 mb-8">
     <turbo-frame id="task-show-frame">
         <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
             <h2 class="text-2xl font-semibold text-gray-800">タスク詳細</h2>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <% if @task.needs_editing %>
-            <div class="w-16 bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded">
+            <div class="inline-block bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded">
               要編集
             </div>
         <% end %>
@@ -23,7 +23,7 @@
             <turbo-frame id="task-detail">
                 <%= render 'shared/task_detail', task: @task %>
             </turbo-frame>
-            <turbo-frame id="edit_task" class="hidden bg-white rounded-xl p-6 shadow-md border border-gray-300 transition-all duration-300 ease-in-out" style="min-height: 300px;">
+            <turbo-frame id="edit_task" class="hidden bg-white rounded-xl p-6 shadow-md border border-gray-300 transition-all duration-300 ease-in-out min-h-[300px] sm:min-h-[400px]">
             </turbo-frame>
         </div>
     </turbo-frame>

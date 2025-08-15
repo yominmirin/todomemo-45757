@@ -1,56 +1,48 @@
 <%= render "shared/header" %>
-<main class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
-  <div class="flex justify-between items-center mb-6 border-b-2 border-blue-400 pb-2">
-    <h2 class="text-2xl font-semibold text-gray-800">タスク一覧</h2>
+<main class="w-full max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-4 sm:p-8 mb-8">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b-2 border-blue-400 pb-2">
+    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">タスク一覧</h2>
   </div>
 
   <div id="taskList" class="space-y-4">
     <% @tasks.each do |task| %>
       <div id="<%= dom_id(task) %>">
-        <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+        <div class="bg-gray-50 rounded-xl p-4 sm:p-6 shadow-md">
           <div class="w-full mb-4">
-            <div class="flex justify-between items-start mb-1">
-              <div class="text-xl font-bold text-gray-800">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+              <div class="text-lg sm:text-xl font-bold text-gray-800 break-words">
                 <%= task.title.present? ? task.title : "無題" %>
               </div>
               <% if task.needs_editing %>
-                <div class="bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded">
+                <div class="bg-red-100 text-red-700 text-sm font-semibold px-2 py-0.5 rounded mt-2 sm:mt-0">
                   要編集
                 </div>
               <% end %>
             </div>
 
-            <div class="flex justify-left items-center">
-              <p class="text-gray-600 text-sm mr-4">
-                重要度: <span class="font-semibold text-orange-500">
-                  <%= task.priority&.name.presence || "未選択" %>
-                </span>
-              </p>
-              <p class="text-gray-600 text-sm mr-4">
-                締切: <span class="font-semibold"><%= task.deadline %></span>
-              </p>
-              <p class="text-gray-600 text-sm">
-                進捗状況: <span class="font-semibold"><%= task.status.name %></span>
-              </p>
+            <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center text-gray-600 text-sm space-y-1 sm:space-y-0 sm:space-x-4 mb-2">
+              <p>重要度: <span class="font-semibold text-orange-500"><%= task.priority&.name.presence || "未選択" %></span></p>
+              <p>締切: <span class="font-semibold"><%= task.deadline %></span></p>
+              <p>進捗状況: <span class="font-semibold"><%= task.status.name %></span></p>
             </div>
 
-            <p class="text-gray-700 mt-2 mb-4"><%= task.details.presence || "詳細はありません" %></p>
+            <p class="text-gray-700 mt-2 mb-4 break-words"><%= task.details.presence || "詳細はありません" %></p>
             <p class="text-gray-600 text-sm">作成日時: <span class="font-semibold"><%= task.created_at.in_time_zone('Tokyo').strftime('%Y-%m-%d %H:%M:%S') %></span></p>
             <p class="text-gray-600 text-sm">カテゴリ: <span class="font-semibold"><%= task.category&.name.presence || "未選択" %></span></p>
           </div>
 
-          <div class="flex justify-end space-x-2">
+          <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
             <!-- 詳細ボタン -->
             <%= link_to "詳細", task_path(task),
-                        class: "bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
+                        class: "bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out text-center" %>
 
             <!-- 削除ボタン -->
             <%= button_to "削除",
               task_path(task),
               method: :delete,
               data: { turbo_confirm: "本当に削除しますか？" },
-              form: { data: { turbo_stream: true } },
-              class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" %>
+              form: { data: { turbo_stream: true }, class: "w-full sm:w-auto" },
+              class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out text-center w-full sm:w-auto" %>
           </div>
         </div>
       </div>
