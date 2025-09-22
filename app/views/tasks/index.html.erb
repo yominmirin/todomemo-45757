@@ -4,6 +4,11 @@
     <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">タスク一覧</h2>
   </div>
 
+  <%= form_tag tasks_path, method: :get do %>
+    <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: 'すべてのタスク' %>
+    <%= submit_tag '絞り込む' %>
+  <% end %>
+
   <div id="taskList" class="space-y-4">
     <% @tasks.each do |task| %>
       <div id="<%= dom_id(task) %>">
