@@ -3,6 +3,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
     @tasks = Task.where(user_id: current_user.id).order(created_at: :asc)
+
+    if params[:category_id].present?
+      @tasks = @tasks.where(category_id: params[:category_id])
+    end
+
+    @categories = Category.all
   end
 
   def new
